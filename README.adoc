@@ -59,6 +59,109 @@ $ cd my_openshift/spring-boot-camel
 $ mvn clean -DskipTests oc:deploy -Popenshift
 ----
 
+You can check application logs once application gets deployed:
+
+----
+~/work/repos/spring-boot-camel : $ mvn oc:log -Popenshift
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------< io.fabric8.quickstarts:spring-boot-camel >--------------
+[INFO] Building Fabric8 :: Quickstarts :: Spring-Boot :: Camel 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- openshift-maven-plugin:1.0.0-rc-1:log (default-cli) @ spring-boot-camel ---
+[INFO] oc: Using OpenShift at https://api.crc.testing:6443/ in namespace default with manifest /home/rohaan/work/repos/spring-boot-camel/target/classes/META-INF/jkube/openshift.yml
+[INFO] oc: OpenShift platform detected
+[INFO] oc: Using project: default
+[INFO] oc: Watching pods with selector LabelSelector(matchExpressions=[], matchLabels={app=spring-boot-camel, provider=jkube, group=io.fabric8.quickstarts}, additionalProperties={}) waiting for a running pod...
+[INFO] oc:  [NEW] spring-boot-camel-1-srxqv status: Running Ready
+[INFO] oc:  [NEW] Tailing log of pod: spring-boot-camel-1-srxqv
+[INFO] oc:  [NEW] Press Ctrl-C to stop tailing the log
+[INFO] oc:  [NEW]
+[INFO] oc: Starting the Java application using /opt/run-java/run-java.sh ...
+[INFO] oc: exec java -javaagent:/opt/jolokia/jolokia.jar=config=/opt/jolokia/etc/jolokia.properties -javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=9779:/opt/prometheus/prometheus-config.yml -Xmx64m -XX:TieredStopAtLevel=1 -XX:ParallelGCThreads=1 -XX:ConcGCThreads=1 -Djava.util.concurrent.ForkJoinPool.common.parallelism=1 -XX:CICompilerCount=1 -XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:+ExitOnOutOfMemoryError -cp . -jar /deployments/spring-boot-camel-1.0-SNAPSHOT.jar
+[INFO] oc: I> No access restrictor found, access to any MBean is allowed
+[INFO] oc: Jolokia: Agent started with URL https://10.116.0.93:8778/jolokia/
+[INFO] oc:
+[INFO] oc:   .   ____          _            __ _ _
+[INFO] oc:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[INFO] oc: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[INFO] oc:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[INFO] oc:   '  |____| .__|_| |_|_| |_\__, | / / / /
+[INFO] oc:  =========|_|==============|___/=/_/_/_/
+[INFO] oc:  :: Spring Boot ::        (v1.5.4.RELEASE)
+[INFO] oc:
+[INFO] oc: 16:45:46.898 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 5.3.5.Final
+[INFO] oc: 16:45:46.957 [main] INFO  i.f.quickstarts.camel.Application - Starting Application on spring-boot-camel-1-srxqv with PID 1 (/deployments/spring-boot-camel-1.0-SNAPSHOT.jar started by jboss in /deployments)
+[INFO] oc: 16:45:46.957 [main] INFO  i.f.quickstarts.camel.Application - No active profile set, falling back to default profiles: default
+[INFO] oc: 16:45:47.261 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@12d3a4e9: startup date [Tue Aug 04 16:45:47 UTC 2020]; root of context hierarchy
+[INFO] oc: 16:45:48.697 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [spring/camel-context.xml]
+[INFO] oc: 16:45:50.109 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.apache.camel.spring.boot.CamelAutoConfiguration' of type [org.apache.camel.spring.boot.CamelAutoConfiguration$$EnhancerBySpringCGLIB$$7ff5fcf9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] oc: 16:45:50.586 [main] INFO  org.xnio - XNIO version 3.3.6.Final
+[INFO] oc: 16:45:50.611 [main] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.3.6.Final
+[INFO] oc: 16:45:50.733 [main] WARN  io.undertow.websockets.jsr - UT026009: XNIO worker was not set on WebSocketDeploymentInfo, the default worker will be used
+[INFO] oc: 16:45:50.733 [main] WARN  io.undertow.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+[INFO] oc: 16:45:50.765 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+[INFO] oc: 16:45:50.765 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3509 ms
+[INFO] oc: 16:45:51.101 [main] INFO  o.s.b.w.s.ServletRegistrationBean - Mapping servlet: 'dispatcherServlet' to [/]
+[INFO] oc: 16:45:51.109 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'metricsFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'webRequestLoggingFilter' to: [/*]
+[INFO] oc: 16:45:51.111 [main] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'applicationContextIdFilter' to: [/*]
+[INFO] oc: 16:45:51.587 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@12d3a4e9: startup date [Tue Aug 04 16:45:47 UTC 2020]; root of context hierarchy
+[INFO] oc: 16:45:51.699 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO] oc: 16:45:51.701 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO] oc: 16:45:51.769 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] oc: 16:45:51.769 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] oc: 16:45:51.826 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] oc: 16:45:53.231 [main] INFO  o.a.c.i.c.DefaultTypeConverter - Loaded 193 type converters
+[INFO] oc: 16:45:54.371 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+[INFO] oc: 16:45:54.378 [main] INFO  o.s.b.a.e.jmx.EndpointMBeanExporter - Registering beans for JMX exposure on startup
+[INFO] oc: 16:45:54.382 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6e0cff20: startup date [Tue Aug 04 16:45:54 UTC 2020]; parent: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@12d3a4e9
+[INFO] oc: 16:45:54.435 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Overriding bean definition for bean 'handlerExceptionResolver' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration; factoryMethodName=handlerExceptionResolver; initMethodName=null; destroyMethodName=(inferred); defined in org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=endpointWebMvcChildContextConfiguration; factoryMethodName=compositeHandlerExceptionResolver; initMethodName=null; destroyMethodName=(inferred); defined in org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration]
+[INFO] oc: 16:45:54.493 [main] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+[INFO] oc: 16:45:54.493 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 111 ms
+[INFO] oc: 16:45:54.495 [main] INFO  o.s.b.w.s.ServletRegistrationBean - Mapping servlet: 'dispatcherServlet' to [/]
+[INFO] oc: 16:45:54.582 [main] INFO  o.s.b.a.e.mvc.EndpointHandlerMapping - Mapped "{[/health || /health.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(javax.servlet.http.HttpServletRequest,java.security.Principal)
+[INFO] oc: 16:45:54.596 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public java.util.Map<java.lang.String, java.lang.Object> org.springframework.boot.actuate.endpoint.mvc.ManagementErrorEndpoint.invoke()
+[INFO] oc: 16:45:54.606 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] oc: 16:45:54.606 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] oc: 16:45:54.653 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6e0cff20: startup date [Tue Aug 04 16:45:54 UTC 2020]; parent: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@12d3a4e9
+[INFO] oc: 16:45:54.800 [main] INFO  o.s.b.c.e.u.UndertowEmbeddedServletContainer - Undertow started on port(s) 8081 (http)
+[INFO] oc: 16:45:54.808 [main] INFO  o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 0
+[INFO] oc: 16:45:54.817 [main] INFO  o.s.b.a.e.jmx.EndpointMBeanExporter - Located managed bean 'healthEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=healthEndpoint]
+[INFO] oc: 16:45:54.954 [main] INFO  o.a.c.spring.boot.RoutesCollector - Loading additional Camel XML routes from: classpath:camel/*.xml
+[INFO] oc: 16:45:54.954 [main] INFO  o.a.c.spring.boot.RoutesCollector - Loading additional Camel XML rests from: classpath:camel-rest/*.xml
+[INFO] oc: 16:45:54.955 [main] INFO  o.a.camel.spring.SpringCamelContext - Apache Camel 2.19.1 (CamelContext: MyCamel) is starting
+[INFO] oc: 16:45:54.956 [main] INFO  o.a.c.m.ManagedManagementStrategy - JMX is enabled
+[INFO] oc: 16:45:55.133 [main] INFO  o.a.c.i.DefaultRuntimeEndpointRegistry - Runtime endpoint registry is in extended mode gathering usage statistics of all incoming and outgoing endpoints (cache limit: 1000)
+[INFO] oc: 16:45:55.297 [main] INFO  o.a.camel.spring.SpringCamelContext - StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
+[INFO] oc: 16:45:55.346 [main] INFO  o.a.camel.spring.SpringCamelContext - Route: route1 started and consuming from: timer://foo?period=5000
+[INFO] oc: 16:45:55.350 [main] INFO  o.a.camel.spring.SpringCamelContext - Total 1 routes, of which 1 are started.
+[INFO] oc: 16:45:55.351 [main] INFO  o.a.camel.spring.SpringCamelContext - Apache Camel 2.19.1 (CamelContext: MyCamel) started in 0.394 seconds
+[INFO] oc: 16:45:55.354 [main] INFO  o.s.b.c.e.u.UndertowEmbeddedServletContainer - Undertow started on port(s) 8080 (http)
+[INFO] oc: 16:45:55.359 [main] INFO  i.f.quickstarts.camel.Application - Started Application in 9.15 seconds (JVM running for 11.374)
+[INFO] oc: 16:45:56.473 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:01.351 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:01.516 [XNIO-2 task-1] INFO  io.undertow.servlet - Initializing Spring FrameworkServlet 'dispatcherServlet'
+[INFO] oc: 16:46:01.516 [XNIO-2 task-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization started
+[INFO] oc: 16:46:01.537 [XNIO-2 task-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization completed in 21 ms
+[INFO] oc: 16:46:06.351 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:11.351 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:16.370 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:21.363 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:26.363 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:31.366 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:36.364 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:41.379 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:46.380 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:51.380 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+[INFO] oc: 16:46:56.375 [Camel (MyCamel) thread #0 - timer://foo] INFO  route1 - >>> Hello World
+----
+
 . In your browser, navigate to the `MY_PROJECT_NAME` project in the OpenShift console.
 Wait until you can see that the pod for the `spring-boot-camel` has started up.
 
