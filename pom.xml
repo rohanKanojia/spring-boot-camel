@@ -19,9 +19,11 @@
         <camel.version>2.21.2</camel.version>
 
         <!-- versions of Maven plugins -->
-        <jkube.version>1.0.0-rc-1</jkube.version>
+        <jkube.version>1.0.1-SNAPSHOT</jkube.version>
         <jkube.generator.from>fabric8/s2i-java:2.3</jkube.generator.from>
+        <!--
         <jkube.openshift.enrichAllWithImageChangeTrigger>true</jkube.openshift.enrichAllWithImageChangeTrigger>
+        -->
         <fabric8.version>2.3.7</fabric8.version>
 
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -161,15 +163,7 @@
                     <plugin>
                         <artifactId>openshift-maven-plugin</artifactId>
                         <groupId>org.eclipse.jkube</groupId>
-                        <version>1.0.0-rc-1</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>resource</goal>
-                                    <goal>build</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+                        <version>${jkube.version}</version>
                     </plugin>
                 </plugins>
             </build>
